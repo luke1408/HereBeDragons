@@ -18,7 +18,7 @@ public class Ground {
 	
 	public static void init(){
 		//Register Grounds here
-		register(new Ground("grass", 1));
+		register(new Ground("grass", 2));
 	}
 	
 	//Registers the entry in the static REGISTRY

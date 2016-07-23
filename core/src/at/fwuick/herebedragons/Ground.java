@@ -1,5 +1,7 @@
 package at.fwuick.herebedragons;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -87,5 +89,24 @@ public class Ground {
 
 	public static Ground getGround(String string) {
 		return REGISTRY.get(string.toUpperCase());
+	}
+
+	//Gets a Random GroundTexture
+	public GroundTexture getRandomGroundTexture() {
+		return getGroundTexture(randomIndex());
+	}
+	
+	//Gets a GroundTexture object for the Texture Index given
+	//KEEPS CONSISTENCY
+	private Map<Integer, GroundTexture> groundtextures = new HashMap<Integer, GroundTexture>();
+	public GroundTexture getGroundTexture(int index){
+		if(!groundtextures.containsKey(index))
+			groundtextures.put(index, new GroundTexture(this, index));
+		return groundtextures.get(index);
+	}
+	
+	//Returns a valid random texture index
+	public int randomIndex(){
+		return howManyTextures()>1?randomness.nextInt(howManyTextures()):0;
 	}
 }

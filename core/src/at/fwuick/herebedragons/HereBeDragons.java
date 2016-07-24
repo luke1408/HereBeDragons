@@ -46,7 +46,8 @@ public class HereBeDragons extends ApplicationAdapter {
 		batch.begin();
 		
 		world.renderChunks(batch, world.player.getPoint());
-		
+		Texture player = world.player.getTexture();
+		batch.draw(player, World.cameraPos.x-(player.getWidth()/2), World.cameraPos.y-(player.getHeight()/2));
 		batch.end();
 	}
 	

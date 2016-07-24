@@ -11,8 +11,16 @@ public class PlainFieldWorldGenerator extends WorldGenerator {
 
 	@Override
 	public Chunk generateChunk(Point p) {
-		Ground hole = Ground.getGround("hole");
 		Chunk c = new Chunk(p);
+		if(r.nextInt(5)==1)
+			fillWithTiles(c);
+		else
+			fillGrassChunk(c);
+		return c;
+	}
+	
+	public void fillGrassChunk(Chunk c){
+		Ground hole = Ground.getGround("hole");
 		c.fillGround(Ground.getGround("grass"));
 		for(int i=r.nextInt(3); i!=0; i--){
 			c.setGround(r.nextInt(16), r.nextInt(16), hole);
@@ -20,7 +28,10 @@ public class PlainFieldWorldGenerator extends WorldGenerator {
 		for(int i=r.nextInt(3); i!=0; i--){
 			c.setGround(r.nextInt(16), r.nextInt(16), Ground.getGround("lift"));
 		}
-		return c;
+	}
+	
+	public void fillWithTiles(Chunk c){
+		c.fillGround(Ground.getGround("tile"));
 	}
 
 }

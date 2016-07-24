@@ -21,6 +21,7 @@ public class Ground {
 		register(new Ground("grass", 2));
 		register(new Ground("hole", 1));
 		register(new Ground("lift", 1));
+		register(new Ground("tile", 1));
 	}
 	
 	//Registers the entry in the static REGISTRY

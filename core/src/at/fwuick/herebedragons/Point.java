@@ -25,5 +25,22 @@ public class Point extends java.awt.Point {
 		return result;
 	}
 	
+	public Distance getDistanceTo(Point p){
+		return new Distance(p.x-x, p.y-y);
+	}
+	
+	public void moveDistance(Distance d){
+		this.x += d.x;
+		this.y += d.y;
+	}
+	
+	public class Distance extends Point{
+
+		public Distance(int i, int j) {
+			super(i,j);
+		}
+		
+	}
+	
 	
 }

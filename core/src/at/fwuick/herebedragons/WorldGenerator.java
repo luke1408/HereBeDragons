@@ -1,9 +1,8 @@
 package at.fwuick.herebedragons;
 
-import java.awt.Point;
 
-public interface WorldGenerator {
-
+public abstract class WorldGenerator {
 	//Generates a chunk on the position p
-	public Chunk generateChunk(Point p);
+	public abstract Chunk generateChunk(Point p);
+	
 }

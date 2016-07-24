@@ -53,4 +53,9 @@ public class Chunk {
 	public static Point indexFromCoord(Point p){
 		return new Point(indexFromCoord(p.x), indexFromCoord(p.y));
 	}
+	
+	public Point getIndex(){
+		
+		return index;
+	}
 }

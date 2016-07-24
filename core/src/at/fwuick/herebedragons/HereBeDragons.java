@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class HereBeDragons extends ApplicationAdapter {
@@ -46,8 +47,8 @@ public class HereBeDragons extends ApplicationAdapter {
 		batch.begin();
 		
 		world.renderChunks(batch, world.player.getPoint());
-		Texture player = world.player.getTexture();
-		batch.draw(player, World.cameraPos.x-(player.getWidth()/2), World.cameraPos.y-(player.getHeight()/2));
+		world.renderEntities(batch, world.player.getPoint());
+		world.renderEntity(batch, world.player);
 		batch.end();
 	}
 	

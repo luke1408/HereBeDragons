@@ -29,9 +29,11 @@ public class Point extends java.awt.Point {
 		return new Distance(p.x-x, p.y-y);
 	}
 	
-	public void moveDistance(Distance d){
-		this.x += d.x;
-		this.y += d.y;
+	public Point moveDistance(Distance d){
+		Point p = new Point(this);
+		p.x += d.x;
+		p.y += d.y;
+		return p;
 	}
 	
 	public class Distance extends Point{

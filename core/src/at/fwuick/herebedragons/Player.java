@@ -2,16 +2,15 @@ package at.fwuick.herebedragons;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class Player {
+public class Player extends Creature {
 
-	private Point point;
 	private String direction;
 	private int walkCounter;
 	private boolean walking;
 
 	//STUB
 	public Player(Point p){
-		this.point = p;
+		this.position = p;
 		direction = "down";
 		walkCounter = 1;
 	}
@@ -21,7 +20,7 @@ public class Player {
 	}
 
 	public Point getPoint() {
-		return point;
+		return position;
 	}
 	
 	public Texture getTexture(){
@@ -37,25 +36,25 @@ public class Player {
 	}
 	
 	public void goNorth(){
-		point.y++;
+		position.y++;
 		direction = "up";
 		walking = true;
 	}
 	
 	public void goEast(){
-		point.x++;
+		position.x++;
 		direction = "right";
 		walking = true;
 	}
 	
 	public void goSouth(){
-		point.y--;
+		position.y--;
 		direction = "down";
 		walking = true;
 	}
 	
 	public void goWest(){
-		point.x--;
+		position.x--;
 		direction = "left";
 		walking = true;
 	}

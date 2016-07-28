@@ -10,6 +10,7 @@ public class Dummy extends Creature{
 	private int textureIndex;
 	
 	public Dummy(){
+		super(new Health(20));
 		textureIndex = randomness.nextInt(5)+1;
 	}
 

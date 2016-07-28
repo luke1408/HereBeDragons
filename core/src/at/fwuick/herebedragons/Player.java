@@ -8,8 +8,8 @@ public class Player extends Creature {
 	private int walkCounter;
 	private boolean walking;
 
-	//STUB
 	public Player(Point p){
+		super(Health.IMMORTAL);
 		this.position = p;
 		direction = "down";
 		walkCounter = 1;

@@ -1,6 +1,7 @@
 package at.fwuick.herebedragons;
 
 public class Health{
+	//IMMORTAL Health object for easy immortality
 	public static final Health IMMORTAL = new Health(0){
 
 		@Override

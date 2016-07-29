@@ -17,10 +17,11 @@ public class PlainFieldWorldGenerator extends WorldGenerator {
 		else
 			fillGrassChunk(c);
 		if(r.nextInt(2)==1){
-			int i = r.nextInt(3)+1;
-			Dummy d = new Dummy();
-			d.setPosition(new Point(c.getWorldPosition().x+r.nextInt(Chunk.CHUNK_SIZE), c.getWorldPosition().y+r.nextInt(Chunk.CHUNK_SIZE)));
-			w.spawn(d);
+			while(r.nextInt(3) != 1){
+				Dummy d = new Dummy(w.entityManager);
+				d.setPosition(new Point(c.getWorldPosition().x+r.nextInt(Chunk.CHUNK_SIZE), c.getWorldPosition().y+r.nextInt(Chunk.CHUNK_SIZE)));
+				w.entityManager.spawn(d);
+			}
 		}
 		return c;
 	}

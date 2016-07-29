@@ -46,9 +46,7 @@ public class HereBeDragons extends ApplicationAdapter {
 		}
 		batch.begin();
 		
-		world.renderChunks(batch, world.player.getPoint());
-		world.renderEntities(batch, world.player.getPoint());
-		world.renderEntity(batch, world.player);
+		world.render(batch);
 		batch.end();
 	}
 	

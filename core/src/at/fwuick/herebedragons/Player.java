@@ -8,15 +8,15 @@ public class Player extends Creature {
 	private int walkCounter;
 	private boolean walking;
 
-	public Player(Point p){
-		super(Health.IMMORTAL);
+	public Player(EntityManager m, Point p){
+		super(m, Health.IMMORTAL);
 		this.position = p;
 		direction = "down";
 		walkCounter = 1;
 	}
 	
-	public Player(){
-		this(new Point());
+	public Player(EntityManager m){
+		this(m, new Point());
 	}
 
 	public Point getPoint() {
@@ -36,25 +36,33 @@ public class Player extends Creature {
 	}
 	
 	public void goNorth(){
+		Point old = new Point(position);
 		position.y++;
+		manager.reportChange(this, old, position);
 		direction = "up";
 		walking = true;
 	}
 	
 	public void goEast(){
+		Point old = new Point(position);
 		position.x++;
+		manager.reportChange(this, old, position);
 		direction = "right";
 		walking = true;
 	}
 	
 	public void goSouth(){
+		Point old = new Point(position);
 		position.y--;
+		manager.reportChange(this, old, position);
 		direction = "down";
 		walking = true;
 	}
 	
 	public void goWest(){
+		Point old = new Point(position);
 		position.x--;
+		manager.reportChange(this, old, position);
 		direction = "left";
 		walking = true;
 	}

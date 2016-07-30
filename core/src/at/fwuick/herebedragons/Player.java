@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player extends Creature {
 
+	//Needed for walking animation{
 	private String direction;
 	private int walkCounter;
 	private boolean walking;
+	//}
 
 	public Player(Point p){
 		super(Health.IMMORTAL);
@@ -22,24 +24,47 @@ public class Player extends Creature {
 	}
 	
 	public Texture getTexture(){
-		Texture t = new Texture(String.format("assets/%s_%s_%s.png", "player", direction, walking?getWalkCounter():"stand"));
+		Texture t = new Texture(String.format("assets/%s_%s_%s.png", "player", direction, walking?getTextureIndex():"stand"));
 		walking = false;
 		return t;
 		
 	}
 	
-	private int getWalkCounter(){
-		walkCounter++;
-		return walkCounter/10%2+1;
+	//This is needed for automatizing the walking animation
+	private void walk(String direction){
+		this.direction = direction;
+		walking = true;
+		if(walkCounter>=19)
+			walkCounter = 1;
+		else
+			walkCounter++;
 	}
 	
-
-
-	@Override
-	public void render(SpriteBatch batch, Point renderPosition) {
-		// TODO Auto-generated method stub
-		super.render(batch, renderPosition);
+	private int getTextureIndex(){
+		
+		return (walkCounter/10)+1 ;
 	}
+	
+	public void goNorth(){
+		walk("up");
+		this.position.goNorth(1);
+	}
+	
+	public void goEast(){
+		walk("right");
+		this.position.goEast(1);
+	}
+	
+	public void goSouth(){
+		walk("down");
+		this.position.goSouth(1);
+	}
+	
+	public void goWest(){
+		walk("left");
+		this.position.goWest(1);
+	}
+	
 	
 	
 	

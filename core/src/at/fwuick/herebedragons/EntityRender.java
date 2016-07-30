@@ -34,7 +34,7 @@ public class EntityRender {
 
 	//RENDER AN ENTIITY
 	public void render(SpriteBatch batch, Entity e){
-		e.render(batch, world.getRenderPosition(e.position));
+		e.render(batch, world.getRenderPosition(e.getPosition()));
 
 	}
 

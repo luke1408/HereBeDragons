@@ -5,22 +5,74 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class Entity {
-	protected Point position;
+	protected PointHistory position;
 	protected EntityManager manager;
 	
-	public Entity(EntityManager manager){
+	
+	
+	public Entity() {
+		super();
+		position = new PointHistory();
+	}
+
+
+	public class PointHistory{
+		private Point last;
+		private Point current;
+		
+		public void set(Point p){
+			this.last = current;
+			this.current = p;
+		}
+		
+		public Point get(){
+			return current;
+		}
+		
+		public Point history(){
+			return last;
+		}
+		
+		public void goNorth(int i){
+			set(new Point(get()).goNorth(i));
+			notifyManager();
+		}
+		
+		public void goEast(int i){
+			set(new Point(get()).goEast(i));
+			notifyManager();
+		}
+		
+		public void goSouth(int i){
+			set(new Point(get()).goSouth(i));
+			notifyManager();
+		}
+		
+		public void goWest(int i){
+			set(new Point(get()).goWest(i));
+			notifyManager();
+		}
+	}
+	
+	public void setEntityManager(EntityManager manager){
 		this.manager = manager;
 	}
 	
 	public abstract Texture getTexture();
 	
 	public Point getPosition(){
-		return position;
+		return position.current;
 	}
 	
 	public void setPosition(Point p){
-		manager.reportChange(this, position, p);
-		this.position = p;
+		notifyManager();
+		this.position.set(p);
+	}
+	
+	//Reports a chanage of position to the EntityManager if he exists
+	public void notifyManager(){
+		if(manager!=null)
+			manager.reportChange(this, position.last, position.get());
 	}
 	
 	

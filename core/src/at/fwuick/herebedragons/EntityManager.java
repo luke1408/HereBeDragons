@@ -31,7 +31,8 @@ public class EntityManager {
 	}
 	
 	public void spawn(Entity e){
-		entities.put(Chunk.indexFromCoord(e.position), e);
+		entities.put(Chunk.indexFromCoord(e.position.get()), e);
+		e.setEntityManager(this);
 	}
 
 }

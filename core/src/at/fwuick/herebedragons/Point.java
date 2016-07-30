@@ -44,20 +44,24 @@ public class Point extends java.awt.Point {
 		
 	}
 	
-	public void goNorth(int i){
+	public Point goNorth(int i){
 		this.y+=i;
+		return this;
 	}
 	
-	public void goEast(int i){
+	public Point goEast(int i){
 		this.x+=i;
+		return this;
 	}
 	
-	public void goSouth(int i){
+	public Point goSouth(int i){
 		this.y-=i;
+		return this;
 	}
 	
-	public void goWest(int i){
+	public Point goWest(int i){
 		this.x-=i;
+		return this;
 	}
 	
 	

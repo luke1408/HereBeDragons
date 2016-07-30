@@ -9,8 +9,8 @@ public class Dummy extends Creature{
 	public static final Random randomness = new Random();
 	private int textureIndex;
 	
-	public Dummy(EntityManager em){
-		super(em, new Health(20));
+	public Dummy(){
+		super(new Health(20));
 		textureIndex = randomness.nextInt(5)+1;
 	}
 
@@ -18,11 +18,4 @@ public class Dummy extends Creature{
 	public Texture getTexture() {
 		return TextureStorage.load(String.format("puppet%s", textureIndex));
 	}
-
-	public void setPosition(Point point) {
-		this.position = point;
-		
-	}
-
-
 }

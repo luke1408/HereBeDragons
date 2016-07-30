@@ -39,7 +39,8 @@ public class World {
 		Ground.init();
 		entityRender = new EntityRender(this);
 		entityManager = new EntityManager();
-		player = new Player(entityManager);
+		player = new Player();
+		entityManager.spawn(player);
 		chunks = new HashMap<>();
 		gen = new PlainFieldWorldGenerator();
 
@@ -51,7 +52,7 @@ public class World {
 	public void renderChunk(SpriteBatch batch, Chunk c){
 
 		Point pointInWindow = new Point(cameraPos);
-		pointInWindow = pointInWindow.moveDistance(player.getPoint().getDistanceTo(c.getWorldPosition()));
+		pointInWindow = pointInWindow.moveDistance(player.getPosition().getDistanceTo(c.getWorldPosition()));
 		c.render(batch, pointInWindow);
 	}
 	
@@ -94,7 +95,7 @@ public class World {
 
 
 	public void render(SpriteBatch batch) {
-		Collection<Chunk> chunksToRender = this.chunksToRender(player.getPoint());
+		Collection<Chunk> chunksToRender = this.chunksToRender(player.getPosition());
 		chunksToRender.forEach(c -> renderChunk(batch, c));
 		List<Entity> toRender = new ArrayList<Entity>();
 		chunksToRender.stream().map(c -> entityManager.getEntitiesByChunk(c.getIndex())).forEach(es -> toRender.addAll(es));
@@ -104,6 +105,6 @@ public class World {
 	//Transforms an World position to a screen position
 	//for rendering
 	public Point getRenderPosition(Point realWorldPosition){
-		return World.cameraPos.moveDistance(player.getPoint().getDistanceTo(realWorldPosition));
+		return World.cameraPos.moveDistance(player.getPosition().getDistanceTo(realWorldPosition));
 	}
 }

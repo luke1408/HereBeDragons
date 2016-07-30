@@ -1,6 +1,7 @@
 package at.fwuick.herebedragons;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player extends Creature {
 
@@ -8,19 +9,16 @@ public class Player extends Creature {
 	private int walkCounter;
 	private boolean walking;
 
-	public Player(EntityManager m, Point p){
-		super(m, Health.IMMORTAL);
-		this.position = p;
+	public Player(Point p){
+		super(Health.IMMORTAL);
+		this.position = new PointHistory();
+		this.position.set(p);
 		direction = "down";
 		walkCounter = 1;
 	}
 	
-	public Player(EntityManager m){
-		this(m, new Point());
-	}
-
-	public Point getPoint() {
-		return position;
+	public Player(){
+		this(new Point());
 	}
 	
 	public Texture getTexture(){
@@ -35,37 +33,15 @@ public class Player extends Creature {
 		return walkCounter/10%2+1;
 	}
 	
-	public void goNorth(){
-		Point old = new Point(position);
-		position.y++;
-		manager.reportChange(this, old, position);
-		direction = "up";
-		walking = true;
+
+
+	@Override
+	public void render(SpriteBatch batch, Point renderPosition) {
+		// TODO Auto-generated method stub
+		super.render(batch, renderPosition);
 	}
 	
-	public void goEast(){
-		Point old = new Point(position);
-		position.x++;
-		manager.reportChange(this, old, position);
-		direction = "right";
-		walking = true;
-	}
 	
-	public void goSouth(){
-		Point old = new Point(position);
-		position.y--;
-		manager.reportChange(this, old, position);
-		direction = "down";
-		walking = true;
-	}
-	
-	public void goWest(){
-		Point old = new Point(position);
-		position.x--;
-		manager.reportChange(this, old, position);
-		direction = "left";
-		walking = true;
-	}
 	
 	
 }

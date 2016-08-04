@@ -1,6 +1,7 @@
 package at.fwuick.herebedragons;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Player extends Creature {
 
@@ -25,12 +26,20 @@ public class Player extends Creature {
 	
 	public Texture getTexture(){
 		Texture t = new Texture(String.format("assets/%s_%s_%s.png", "player", direction, walking?getWalkCounter():"stand"));
+		bounds.height=t.getHeight();
+		bounds.width=t.getWidth();
 		walking = false;
 		return t;
 		
 	}
 	
+	public void refreshBounds(){
+		bounds.x=position.x;
+		bounds.y=position.y;
+	}
+	
 	private int getWalkCounter(){
+		refreshBounds();
 		walkCounter++;
 		return walkCounter/10%2+1;
 	}

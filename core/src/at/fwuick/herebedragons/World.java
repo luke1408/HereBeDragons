@@ -25,7 +25,7 @@ public class World {
 	public Player player;
 	public WorldGenerator gen;
 	//Entities HashMultiset to get the entites by the index of a chunk
-	private Multimap<Point, Entity> entities;
+	public Multimap<Point, Entity> entities;
 	//This class exists for making the entities HashMultiset work
 	//This overrides the hashcode function to return the hashcode of the Point of the Chunk they are standing on
 	//Makes it easier to get the bunch of entities you really want to render

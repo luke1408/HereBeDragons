@@ -14,8 +14,11 @@ public class PlainFieldWorldGenerator extends WorldGenerator {
 		Chunk c = new Chunk(p);
 		if(r.nextInt(5)==1)
 			fillWithTiles(c);
-		else
+		else{
 			fillGrassChunk(c);
+			if(r.nextInt(3) == 1)
+				genTrees(c, w);
+		}
 		if(r.nextInt(2)==1){
 			while(r.nextInt(3) != 1){
 				Dummy d = new Dummy();
@@ -26,6 +29,15 @@ public class PlainFieldWorldGenerator extends WorldGenerator {
 		return c;
 	}
 	
+	private void genTrees(Chunk c, World w) {
+		for(int i=0; i!=10; i++){
+			Tree t = new Tree();
+			t.setPosition(new Point(c.getWorldPosition().x+r.nextInt(Chunk.CHUNK_SIZE), c.getWorldPosition().y+r.nextInt(Chunk.CHUNK_SIZE)));
+			w.entityManager.spawn(t);
+		}
+		
+	}
+
 	public void fillGrassChunk(Chunk c){
 		Ground hole = Ground.getGround("hole");
 		c.fillGround(Ground.getGround("grass"));

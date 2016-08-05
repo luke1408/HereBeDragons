@@ -24,14 +24,19 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.SetMultimap;
 
 public class World {
+
 	public static final Point cameraPos = new Point(Gdx.graphics.getWidth()/2-16, Gdx.graphics.getHeight()/2-16);
 	public Map<Point, Chunk> chunks;
 	public Player player;
 	public WorldGenerator gen;
 
+
+	//Entities HashMultiset to get the entites by the index of a chunk
+	public Multimap<Point, Entity> entities;
 	//This class exists for making the entities HashMultiset work
 	//This overrides the hashcode function to return the hashcode of the Point of the Chunk they are standing on
 	//Makes it easier to get the bunch of entities you really want to render
+	}
 	private EntityRender entityRender;
 	public EntityManager entityManager;
 	
@@ -62,6 +67,7 @@ public class World {
 		
 		for(int i=-1; i<2; i++){
 			for(int j=-1; j<2; j++){
+
 				Chunk c = getChunkOfRealPosition(pointInWorld, i, j);
 				torender.add(c);
 			}

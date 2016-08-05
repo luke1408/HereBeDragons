@@ -3,10 +3,13 @@ package at.fwuick.herebedragons;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Entity {
 	protected PointHistory position;
 	protected EntityManager manager;
+	//Hitbox/bounds of an entity
+	protected Rectangle bounds = new Rectangle();
 	
 	
 	

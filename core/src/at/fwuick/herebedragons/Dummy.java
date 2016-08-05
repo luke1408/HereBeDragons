@@ -17,15 +17,11 @@ public class Dummy extends Creature{
 
 	@Override
 	public Texture getTexture() {
-		bounds.height=30;
-		bounds.width=30;
 		return TextureStorage.load(String.format("puppet%s", textureIndex));
 	}
 
 	public void setPosition(Point point) {
-		this.position = point;
-		bounds.x = position.x;
-		bounds.y = position.y;
+		this.position.set(point);
 	}
 
 

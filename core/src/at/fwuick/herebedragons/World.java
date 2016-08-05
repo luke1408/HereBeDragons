@@ -36,14 +36,13 @@ public class World {
 	//This class exists for making the entities HashMultiset work
 	//This overrides the hashcode function to return the hashcode of the Point of the Chunk they are standing on
 	//Makes it easier to get the bunch of entities you really want to render
-	}
 	private EntityRender entityRender;
 	public EntityManager entityManager;
 	
 	public World(){
 		Ground.init();
 		entityRender = new EntityRender(this);
-		entityManager = new EntityManager();
+		entityManager = new EntityManager(this);
 		player = new Player();
 		entityManager.spawn(player);
 		chunks = new HashMap<>();
@@ -88,7 +87,7 @@ public class World {
 		return getChunk(pointInChunks);
 	}
 
-	private Chunk getChunk(Point pointInChunks) {
+	public Chunk getChunk(Point pointInChunks) {
 		if(!chunks.containsKey(pointInChunks)){
 			chunks.put(pointInChunks, gen.generateChunk(this, pointInChunks));
 		}
@@ -112,5 +111,16 @@ public class World {
 	//for rendering
 	public Point getRenderPosition(Point realWorldPosition){
 		return World.cameraPos.moveDistance(player.getPosition().getDistanceTo(realWorldPosition));
+	}
+	
+	//Gets 3x3 chunks arround the given chunk
+	public Collection<Chunk> getSurroundingChunks(Chunk c){
+		List<Chunk> cs = new ArrayList<Chunk>();
+		for(int i=-1; i<2; i++){
+			for(int j=-1; j<2; j++){
+				cs.add(this.getChunk(new Point(c.getIndex().x+i, c.getIndex().y+j)));
+			}
+		}
+		return cs;
 	}
 }

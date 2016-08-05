@@ -14,7 +14,7 @@ public class Player extends Creature {
 
 	public Player(Point p){
 		super(Health.IMMORTAL);
-		this.position = new PointHistory();
+		this.position = new PointHistory(this);
 		this.position.set(p);
 		direction = "down";
 		walkCounter = 1;
@@ -26,8 +26,6 @@ public class Player extends Creature {
 	
 	public Texture getTexture(){
 		Texture t = new Texture(String.format("assets/%s_%s_%s.png", "player", direction, walking?getTextureIndex():"stand"));
-		bounds.height=t.getHeight();
-		bounds.width=t.getWidth();
 		walking = false;
 		return t;
 		
@@ -42,13 +40,8 @@ public class Player extends Creature {
 		else
 			walkCounter++;
 	}
-	public void refreshBounds(){
-		bounds.x=position.x;
-		bounds.y=position.y;
-	}
 	
 	private int getWalkCounter(){
-		refreshBounds();
 		walkCounter++;
 		return walkCounter/10%2+1;
 	}

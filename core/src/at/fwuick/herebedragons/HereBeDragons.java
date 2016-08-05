@@ -34,12 +34,6 @@ public class HereBeDragons extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		if(Gdx.input.isKeyPressed(Keys.W)){
 			world.player.goNorth();
-			for(Entity en : world.entities.values()){
-				if(world.player.bounds.overlaps(en.bounds)){
-					System.out.println("Yo");
-				}
-				System.out.println(en.bounds);
-			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.A)){
 			world.player.goWest();

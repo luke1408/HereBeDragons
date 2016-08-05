@@ -1,7 +1,10 @@
 package at.fwuick.herebedragons;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
@@ -12,9 +15,15 @@ public class EntityManager {
 
 	//Entities HashMultiset to get the entites by the index of a chunk
 	private Multimap<Point, Entity> entities;
+	private World world;
 	
-	public  EntityManager(){
+	public  EntityManager(World w){
 		entities = HashMultimap.create();
+		this.world = w;
+	}
+	
+	public Chunk chunkFromEntity(Entity e){
+		return world.getChunk(Chunk.indexFromCoord(e.getPosition()));
 	}
 	
 	public void reportChange(Entity entity, Point old, Point newP) {
@@ -33,6 +42,21 @@ public class EntityManager {
 	public void spawn(Entity e){
 		entities.put(Chunk.indexFromCoord(e.position.get()), e);
 		e.setEntityManager(this);
+	}
+	
+	public boolean collapse(Entity entity, Point newP){
+		List<Entity> entitiesToCheck = new ArrayList<Entity>();
+		Rectangle rec = new Rectangle(entity.getBoundingBox());
+		rec.setPosition(newP.x, newP.y);
+		world.getSurroundingChunks(entity.getChunk()).forEach(c -> entitiesToCheck.addAll(this.getEntitiesByChunk(c.getIndex())));
+		for(Entity e: entitiesToCheck){
+			if(!e.equals(entity)){
+				if(e.getBoundingBox().overlaps(rec)){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }

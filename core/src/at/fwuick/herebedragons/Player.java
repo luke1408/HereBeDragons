@@ -1,7 +1,10 @@
 package at.fwuick.herebedragons;
 
+import java.util.Collection;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player extends Creature {
@@ -11,6 +14,8 @@ public class Player extends Creature {
 	private int walkCounter;
 	private boolean walking;
 	//}
+	//Needed for punching aniation
+	private int punch;
 
 	public Player(Point p){
 		super(Health.IMMORTAL);
@@ -24,9 +29,17 @@ public class Player extends Creature {
 		this(new Point());
 	}
 	
-	public Texture getTexture(){
-		Texture t = new Texture(String.format("assets/%s_%s_%s.png", "player", direction, walking?getTextureIndex():"stand"));
+	public void tick(){
 		walking = false;
+		punch--;
+	}
+	
+	public Texture getTexture(){
+		String s = walking?""+getTextureIndex():"stand";
+		if(punch > 0)
+			s = "punch";
+		Texture t = new Texture(String.format("assets/%s_%s_%s.png", "player", direction, s));
+		tick();
 		return t;
 		
 	}
@@ -41,13 +54,7 @@ public class Player extends Creature {
 			walkCounter++;
 	}
 	
-	private int getWalkCounter(){
-		walkCounter++;
-		return walkCounter/10%2+1;
-	}
-	
 	private int getTextureIndex(){
-		
 		return (walkCounter/10)+1 ;
 	}
 	
@@ -71,7 +78,34 @@ public class Player extends Creature {
 		this.position.goWest(1);
 	}
 	
+	public void punch(){
+		punch = 5;
+		Collection<Entity> entities = manager.hitEntities(punchRectangle());
+		entities.forEach(e -> {
+			if(e instanceof Creature && !(e instanceof Player))
+				((Creature)e).dealDamage(10);
+		});
+		
+	}
 	
+	public Rectangle punchRectangle(){
+		Rectangle rec = null;
+		switch (direction){
+		case "up":
+			rec = new Rectangle(20, 12, 2, 12);
+			break;
+		case "down":
+			rec = new Rectangle(20, 10, 2, 5);
+			break;
+		case "left":
+			rec = new Rectangle(5, 12, 10, 3);
+			break;
+		case "right":
+			rec = new Rectangle(16, 12, 9, 3);
+			break;
+		}
+		return new Rectangle(this.getPosition().x + (rec.x*2), this.getPosition().y + (rec.y*2) ,rec.width*2, rec.height*2);
+	}
 	
 	
 	

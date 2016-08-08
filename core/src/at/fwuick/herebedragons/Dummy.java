@@ -3,6 +3,8 @@ package at.fwuick.herebedragons;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Dummy extends Creature{
@@ -23,6 +25,5 @@ public class Dummy extends Creature{
 	public void setPosition(Point point) {
 		this.position.set(point);
 	}
-
 
 }

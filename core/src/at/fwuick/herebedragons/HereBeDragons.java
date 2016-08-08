@@ -44,6 +44,9 @@ public class HereBeDragons extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Keys.D)){
 			world.player.goEast();
 		}
+		if(Gdx.input.isKeyPressed(Keys.E)){
+			world.player.punch();
+		}
 		batch.begin();
 		
 		world.render(batch);

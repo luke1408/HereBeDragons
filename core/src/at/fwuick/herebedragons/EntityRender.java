@@ -3,8 +3,10 @@ package at.fwuick.herebedragons;
 import java.util.Collection;
 import java.util.Comparator;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 public class EntityRender {
 	
@@ -30,12 +32,31 @@ public class EntityRender {
 		entities.stream().sorted(backToForth).forEach(e -> {
 			render(batch, e);
 		});
+		/*Texture hitbox = TextureStorage.load("hitbox");
+		entities.stream().sorted(backToForth).forEach(e -> {
+			Rectangle rek = null;
+			if(e instanceof Player){
+				Player p = (Player)e;
+				rek = p.punchRectangle();
+			}else if (e instanceof Creature) {
+				rek = ((Creature)e).getHitBox();
+			}
+			if(rek != null){
+			Point recPoint = new Point(Math.round(rek.x), Math.round(rek.y));
+			Point renderPoint = world.getRenderPosition(recPoint);
+			Texture t = TextureStorage.load("hitbox");
+			Sprite sprite = new Sprite(t);
+			sprite.setSize(rek.width, rek.height);
+			sprite.setPosition(renderPoint.x, renderPoint.y);
+			sprite.draw(batch);
+			}
+		});*/
 	}
 
 	//RENDER AN ENTIITY
 	public void render(SpriteBatch batch, Entity e){
 		e.render(batch, world.getRenderPosition(e.getPosition()));
-
+		
 	}
 
 }

@@ -22,6 +22,7 @@ public class Health{
 	
 	private int maxHealth;
 	private int currentHealth;
+	private boolean hurt;
 	
 	public Health(int health){
 		maxHealth = health;
@@ -30,6 +31,15 @@ public class Health{
 	
 	public void dealDamage(int damage){
 		currentHealth -= damage>currentHealth?currentHealth:damage;
+		hurt = true;
+	}
+	
+	public boolean justHurt(){
+		if(hurt){
+			hurt = false;
+			return true;
+		}
+		return hurt;
 	}
 	
 	public void heal(int value){

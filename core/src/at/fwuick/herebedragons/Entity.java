@@ -92,6 +92,10 @@ public abstract class Entity {
 		return new Rectangle(getPosition().x, getPosition().y, getBounds().x, getBounds().y/4);
 	}
 	
+	public Rectangle getHitBox(){
+		return new Rectangle(getPosition().x, getPosition().y, getBounds().x*2, getBounds().y);
+	}
+	
 	//Reports a chanage of position to the EntityManager if he exists
 	public void notifyManager(){
 		if(manager!=null)

@@ -123,4 +123,10 @@ public class World {
 		}
 		return cs;
 	}
+
+
+
+	public Chunk getChunkOfRealPosition(Point point) {
+		return getChunkOfRealPosition(point, 0, 0);
+	}
 }

@@ -3,6 +3,7 @@ package at.fwuick.herebedragons;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.google.common.collect.HashMultimap;
@@ -57,6 +58,14 @@ public class EntityManager {
 			}
 		}
 		return false;
+	}
+	
+	//Gets all entities that are overlapping with the given rectangle
+	public Collection<Entity> hitEntities(Rectangle rekt){
+		Collection<Chunk> chunks = world.getSurroundingChunks(world.getChunkOfRealPosition(new Point(Math.round(rekt.x), Math.round(rekt.y))));
+		List<Entity> entitiesToCheck = new ArrayList<Entity>();
+		chunks.stream().forEach(c -> entitiesToCheck.addAll(getEntitiesByChunk(c.getIndex())));
+		return entitiesToCheck.stream().filter(e -> rekt.overlaps(e.getHitBox())).collect(Collectors.toList());
 	}
 
 }

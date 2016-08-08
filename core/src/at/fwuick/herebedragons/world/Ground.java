@@ -1,4 +1,4 @@
-package at.fwuick.herebedragons;
+package at.fwuick.herebedragons.world;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

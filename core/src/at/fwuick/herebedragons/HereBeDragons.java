@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import at.fwuick.herebedragons.world.World;
+
 public class HereBeDragons extends ApplicationAdapter {
 	
 	public final static int CHUNK_SIZE = 10;

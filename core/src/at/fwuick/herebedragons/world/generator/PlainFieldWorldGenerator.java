@@ -1,6 +1,13 @@
-package at.fwuick.herebedragons;
+package at.fwuick.herebedragons.world.generator;
 
 import java.util.Random;
+
+import at.fwuick.herebedragons.entities.enemies.Dummy;
+import at.fwuick.herebedragons.entities.objects.Tree;
+import at.fwuick.herebedragons.world.Chunk;
+import at.fwuick.herebedragons.world.Ground;
+import at.fwuick.herebedragons.world.Point;
+import at.fwuick.herebedragons.world.World;
 
 public class PlainFieldWorldGenerator extends WorldGenerator {
 

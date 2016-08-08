@@ -1,4 +1,4 @@
-package at.fwuick.herebedragons;
+package at.fwuick.herebedragons.entities;
 
 public class Health{
 	//IMMORTAL Health object for easy immortality

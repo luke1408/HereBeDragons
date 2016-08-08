@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
+import at.fwuick.herebedragons.entities.Entity;
+import at.fwuick.herebedragons.world.World;
+
 public class EntityRender {
 	
 	private Collection<Entity> lastRendered;

@@ -1,4 +1,4 @@
-package at.fwuick.herebedragons;
+package at.fwuick.herebedragons.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 import com.badlogic.gdx.math.Rectangle;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
+import at.fwuick.herebedragons.world.Chunk;
+import at.fwuick.herebedragons.world.Point;
+import at.fwuick.herebedragons.world.World;
 
 //This holds the collection of all Entities in a world
 //It must be easy to find the entities per chunks

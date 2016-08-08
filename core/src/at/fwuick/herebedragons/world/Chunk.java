@@ -1,4 +1,4 @@
-package at.fwuick.herebedragons;
+package at.fwuick.herebedragons.world;
 
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

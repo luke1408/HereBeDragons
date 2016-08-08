@@ -1,4 +1,4 @@
-package at.fwuick.herebedragons;
+package at.fwuick.herebedragons.world;
 
 public class Point extends java.awt.Point {
 

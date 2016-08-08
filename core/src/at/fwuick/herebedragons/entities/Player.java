@@ -1,9 +1,12 @@
-package at.fwuick.herebedragons;
+package at.fwuick.herebedragons.entities;
 
 import java.util.Collection;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+
+import at.fwuick.herebedragons.world.Point;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 

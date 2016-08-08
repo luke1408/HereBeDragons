@@ -1,4 +1,4 @@
-package at.fwuick.herebedragons;
+package at.fwuick.herebedragons.entities.enemies;
 
 import java.util.Random;
 
@@ -6,6 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+
+import at.fwuick.herebedragons.TextureStorage;
+import at.fwuick.herebedragons.entities.Creature;
+import at.fwuick.herebedragons.entities.Health;
+import at.fwuick.herebedragons.world.Point;
 
 public class Dummy extends Creature{
 

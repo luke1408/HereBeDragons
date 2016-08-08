@@ -1,4 +1,4 @@
-package at.fwuick.herebedragons;
+package at.fwuick.herebedragons.world;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +22,13 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.SetMultimap;
+
+import at.fwuick.herebedragons.EntityRender;
+import at.fwuick.herebedragons.entities.Entity;
+import at.fwuick.herebedragons.entities.EntityManager;
+import at.fwuick.herebedragons.entities.Player;
+import at.fwuick.herebedragons.world.generator.PlainFieldWorldGenerator;
+import at.fwuick.herebedragons.world.generator.WorldGenerator;
 
 public class World {
 

@@ -1,5 +1,9 @@
 package at.fwuick.herebedragons.item;
 
+import com.badlogic.gdx.graphics.Texture;
+
+import at.fwuick.herebedragons.TextureStorage;
+
 public class Item {
 	public static final int INFINITE_USES = -22;
 	public static final int DEFAULT_USE = 1;
@@ -27,5 +31,9 @@ public class Item {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	public Texture getTexture() {
+		return TextureStorage.load("item_"+name);
 	}
 }

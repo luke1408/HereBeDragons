@@ -5,13 +5,17 @@ import java.util.Collection;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
+import at.fwuick.herebedragons.item.Inventory;
+import at.fwuick.herebedragons.item.Item;
 import at.fwuick.herebedragons.world.Point;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player extends Creature {
-
+	
+	private Inventory inventory;
+	
 	//Needed for walking animation{
 	private String direction;
 	private int walkCounter;
@@ -26,6 +30,7 @@ public class Player extends Creature {
 		this.position.set(p);
 		direction = "down";
 		walkCounter = 1;
+		this.inventory = new Inventory();
 	}
 	
 	public Player(){
@@ -110,6 +115,8 @@ public class Player extends Creature {
 		return new Rectangle(this.getPosition().x + (rec.x*2), this.getPosition().y + (rec.y*2) ,rec.width*2, rec.height*2);
 	}
 	
-	
+	public Inventory inventory(){
+		return inventory;
+	}
 	
 }

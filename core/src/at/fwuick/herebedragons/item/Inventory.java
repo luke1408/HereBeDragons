@@ -18,7 +18,7 @@ public class Inventory {
 	}
 	
 	public int rows(){
-		return slots.length;
+		return slots.length/row_size;
 	}
 	
 	public int columns(){

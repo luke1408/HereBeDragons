@@ -85,4 +85,9 @@ public class EntityManager {
 		return entitiesToCheck.stream().filter(e -> rekt.overlaps(e.getHitBox())).collect(Collectors.toList());
 	}
 
+	public void despawn(Entity entity) {
+		this.entities.remove(entity.getChunk().getIndex(), entity);
+		
+	}
+
 }

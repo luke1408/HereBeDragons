@@ -127,4 +127,8 @@ public abstract class Entity {
 	public void tick(){
 		
 	}
+	
+	public void despawn(){
+		manager.despawn(this);
+	}
 }

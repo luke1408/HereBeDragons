@@ -24,11 +24,16 @@ public class Dummy extends Creature{
 
 	@Override
 	public Texture getTexture() {
+		if(this.showCorpse())
+			return TextureStorage.load("puppet_corpse");
 		return TextureStorage.load(String.format("puppet%s", textureIndex));
 	}
 
 	public void setPosition(Point point) {
 		this.position.set(point);
 	}
+	
+	
+	
 
 }

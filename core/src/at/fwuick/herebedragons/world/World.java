@@ -46,6 +46,9 @@ public class World {
 	private EntityRender entityRender;
 	public EntityManager entityManager;
 	
+	//Frame
+	public List<Chunk> chunkFrame; 
+	
 	public World(){
 		Ground.init();
 		entityRender = new EntityRender(this);
@@ -54,6 +57,7 @@ public class World {
 		entityManager.spawn(player);
 		chunks = new HashMap<>();
 		gen = new PlainFieldWorldGenerator();
+		chunkFrame = new ArrayList<>();
 
 	}
 	
@@ -107,7 +111,7 @@ public class World {
 
 
 	public void render(SpriteBatch batch) {
-		Collection<Chunk> chunksToRender = this.chunksToRender(player.getPosition());
+		Collection<Chunk> chunksToRender = chunkFrame;
 		chunksToRender.forEach(c -> renderChunk(batch, c));
 		List<Entity> toRender = new ArrayList<Entity>();
 		chunksToRender.stream().map(c -> entityManager.getEntitiesByChunk(c.getIndex())).forEach(es -> toRender.addAll(es));
@@ -136,4 +140,13 @@ public class World {
 	public Chunk getChunkOfRealPosition(Point point) {
 		return getChunkOfRealPosition(point, 0, 0);
 	}
+
+
+
+	public void tick() {
+		chunkFrame = new ArrayList(getSurroundingChunks(player.getChunk()));
+		entityManager.tick();
+		
+	}
+	
 }

@@ -16,11 +16,14 @@ public abstract class Entity {
 	//Hitbox/bounds of an entity
 	protected Vector2 bounds;
 	
+	public boolean needTick;
+	
 	
 	
 	public Entity() {
 		super();
 		position = new PointHistory(this);
+		needTick = false;
 	}
 
 
@@ -119,5 +122,9 @@ public abstract class Entity {
 	
 	public Chunk getChunk(){
 		return this.manager.chunkFromEntity(this);
+	}
+	
+	public void tick(){
+		
 	}
 }

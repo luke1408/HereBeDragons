@@ -2,7 +2,7 @@ package at.fwuick.herebedragons.world.generator;
 
 import java.util.Random;
 
-import at.fwuick.herebedragons.entities.enemies.Dummy;
+import at.fwuick.herebedragons.entities.npc.Dummy;
 import at.fwuick.herebedragons.entities.objects.Tree;
 import at.fwuick.herebedragons.world.Chunk;
 import at.fwuick.herebedragons.world.Ground;

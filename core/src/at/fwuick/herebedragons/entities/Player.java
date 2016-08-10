@@ -22,7 +22,10 @@ public class Player extends Creature {
 	private boolean walking;
 	//}
 	//Needed for punching aniation
-	private int punch;
+	private int punchCooldown;
+	public static final int DEFAULT_PUNCH = 20;
+	private int punchingAnimation;
+	public static final int DEFAULT_PUNCHING_ANIMATION = 10;
 
 	public Player(Point p){
 		super(Health.IMMORTAL);
@@ -37,17 +40,28 @@ public class Player extends Creature {
 		this(new Point());
 	}
 	
+	@Override
 	public void tick(){
-		walking = false;
-		punch--;
+		if(punchCooldown > 0)
+			punchCooldown--;
+		if(punchingAnimation > 0)
+			punchingAnimation--;
 	}
 	
+	
+	
+	@Override
+	public void render(SpriteBatch batch, Point renderPosition) {
+		// TODO Auto-generated method stub
+		super.render(batch, renderPosition);
+		walking = false;
+	}
+
 	public Texture getTexture(){
 		String s = walking?""+getTextureIndex():"stand";
-		if(punch > 0)
+		if(punchingAnimation > 0)
 			s = "punch";
 		Texture t = new Texture(String.format("assets/%s_%s_%s.png", "player", direction, s));
-		tick();
 		return t;
 		
 	}
@@ -87,7 +101,10 @@ public class Player extends Creature {
 	}
 	
 	public void punch(){
-		punch = 5;
+		if(punchCooldown > 0)
+			return;
+		punchCooldown = DEFAULT_PUNCH;
+		punchingAnimation = DEFAULT_PUNCHING_ANIMATION;
 		Collection<Entity> entities = manager.hitEntities(punchRectangle());
 		entities.forEach(e -> {
 			if(e instanceof Creature && !(e instanceof Player))

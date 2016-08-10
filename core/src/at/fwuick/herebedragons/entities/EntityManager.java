@@ -25,6 +25,19 @@ public class EntityManager {
 	public  EntityManager(World w){
 		entities = HashMultimap.create();
 		this.world = w;
+		entityFrame = new ArrayList<>();
+	}
+	
+	//Entities that should get tick() and render()
+	private List<Entity> entityFrame;
+	
+	public void tick(){
+		Collection<Chunk> chunks = world.chunkFrame;
+		//Generate new entityFrame
+		entityFrame.clear();
+		chunks.forEach(c -> entityFrame.addAll(getEntitiesByChunk(c.getIndex())));
+		//Tick entityFrame
+		entityFrame.stream().filter(e -> e.needTick).forEach(e -> e.tick());
 	}
 	
 	public Chunk chunkFromEntity(Entity e){

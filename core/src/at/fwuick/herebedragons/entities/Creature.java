@@ -14,14 +14,25 @@ public abstract class Creature extends Entity{
 	//HEALTH OBJECT
 	private Health health;
 	
+	private int damageAnimation;
+	public final static int DEFAULT_DAMAGE_ANIMATION = 5;
+	
 	public Creature(Health health){
 		super();
 		this.health = health;
+		this.needTick = true;
 	}
 
 	public void dealDamage(int i) {
+		damageAnimation = DEFAULT_DAMAGE_ANIMATION;
 		health.dealDamage(i);
 		
+	}
+
+	@Override
+	public void tick() {
+		if(damageAnimation > 0)
+			damageAnimation--;
 	}
 
 	@Override
@@ -29,7 +40,7 @@ public abstract class Creature extends Entity{
 		Sprite shadow = new Sprite(TextureStorage.load("shadow"));
 		Sprite sprite = new Sprite(this.getTexture());
 		sprite.setSize(sprite.getWidth()*2, sprite.getHeight()*2);
-		if(health.justHurt())
+		if(damageAnimation > 0)
 			sprite.setColor(Color.RED);
 		shadow.setSize(sprite.getWidth(), sprite.getHeight());
 		sprite.setPosition(renderPosition.x, renderPosition.y);
@@ -37,8 +48,6 @@ public abstract class Creature extends Entity{
 		shadow.draw(batch);
 		sprite.draw(batch);
 	}
-	
-	
 	
 	
 }

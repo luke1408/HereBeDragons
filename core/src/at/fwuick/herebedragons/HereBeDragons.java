@@ -50,7 +50,7 @@ public class HereBeDragons extends ApplicationAdapter {
 			world.player.punch();
 		}
 		batch.begin();
-		
+		world.tick();
 		world.render(batch);
 		batch.end();
 	}

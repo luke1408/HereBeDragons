@@ -1,4 +1,4 @@
-package at.fwuick.herebedragons.entities.enemies;
+package at.fwuick.herebedragons.entities.npc;
 
 import java.util.Random;
 

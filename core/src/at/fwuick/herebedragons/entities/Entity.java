@@ -1,5 +1,7 @@
 package at.fwuick.herebedragons.entities;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,6 +19,8 @@ public abstract class Entity {
 	protected Vector2 bounds;
 	
 	public boolean needTick;
+	public boolean canHit;
+	public boolean canWalkthrough;
 	
 	
 	
@@ -115,7 +119,7 @@ public abstract class Entity {
 		sprite.setSize(sprite.getWidth()*2, sprite.getHeight()*2);
 		shadow.setSize(sprite.getWidth(), sprite.getHeight());
 		sprite.setPosition(renderPosition.x, renderPosition.y);
-		shadow.setPosition(renderPosition.x, renderPosition.y-10);
+		shadow.setPosition(renderPosition.x, renderPosition.y-2);
 		shadow.draw(batch);
 		sprite.draw(batch);
 	}
@@ -130,5 +134,11 @@ public abstract class Entity {
 	
 	public void despawn(){
 		manager.despawn(this);
+	}
+	
+	public Random random(){
+		if(manager == null)
+			return new Random();
+		return manager.random();
 	}
 }

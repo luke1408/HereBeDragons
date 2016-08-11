@@ -3,12 +3,14 @@ package at.fwuick.herebedragons.entities;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import at.fwuick.herebedragons.entities.objects.Pickup;
 import at.fwuick.herebedragons.world.Chunk;
 import at.fwuick.herebedragons.world.Point;
 import at.fwuick.herebedragons.world.World;
@@ -20,12 +22,14 @@ public class EntityManager {
 
 	//Entities HashMultiset to get the entites by the index of a chunk
 	private Multimap<Point, Entity> entities;
-	private World world;
+	public World world;
+	private Random random;
 	
 	public  EntityManager(World w){
 		entities = HashMultimap.create();
 		this.world = w;
 		entityFrame = new ArrayList<>();
+		random = new Random();
 	}
 	
 	//Entities that should get tick() and render()
@@ -38,6 +42,8 @@ public class EntityManager {
 		chunks.forEach(c -> entityFrame.addAll(getEntitiesByChunk(c.getIndex())));
 		//Tick entityFrame
 		entityFrame.stream().filter(e -> e.needTick).forEach(e -> e.tick());
+		//Checks for pickups
+		pickups();
 	}
 	
 	public Chunk chunkFromEntity(Entity e){
@@ -63,12 +69,11 @@ public class EntityManager {
 	}
 	
 	public boolean collapse(Entity entity, Point newP){
-		List<Entity> entitiesToCheck = new ArrayList<Entity>();
+		List<Entity> entitiesToCheck = entityFrame;
 		Rectangle rec = new Rectangle(entity.getBoundingBox());
 		rec.setPosition(newP.x, newP.y);
-		world.getSurroundingChunks(entity.getChunk()).forEach(c -> entitiesToCheck.addAll(this.getEntitiesByChunk(c.getIndex())));
 		for(Entity e: entitiesToCheck){
-			if(!e.equals(entity)){
+			if(!e.equals(entity)&&!e.canWalkthrough){
 				if(e.getBoundingBox().overlaps(rec)){
 					return true;
 				}
@@ -77,17 +82,22 @@ public class EntityManager {
 		return false;
 	}
 	
+	public void pickups(){
+		entityFrame.stream().filter(e -> e instanceof Pickup).map(e -> (Pickup)e).filter(p -> p.getBoundingBox().overlaps(this.world.player.getBoundingBox())).forEach(p -> p.pickup(this.world.player));
+	}
+	
 	//Gets all entities that are overlapping with the given rectangle
 	public Collection<Entity> hitEntities(Rectangle rekt){
-		Collection<Chunk> chunks = world.getSurroundingChunks(world.getChunkOfRealPosition(new Point(Math.round(rekt.x), Math.round(rekt.y))));
-		List<Entity> entitiesToCheck = new ArrayList<Entity>();
-		chunks.stream().forEach(c -> entitiesToCheck.addAll(getEntitiesByChunk(c.getIndex())));
-		return entitiesToCheck.stream().filter(e -> rekt.overlaps(e.getHitBox())).collect(Collectors.toList());
+		return entityFrame.stream().filter(e -> e.canHit).filter(e -> rekt.overlaps(e.getHitBox())).collect(Collectors.toList());
 	}
 
 	public void despawn(Entity entity) {
 		this.entities.remove(entity.getChunk().getIndex(), entity);
 		
+	}
+
+	public Random random() {
+		return random;
 	}
 
 }

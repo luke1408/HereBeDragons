@@ -1,5 +1,7 @@
 package at.fwuick.herebedragons.entities;
 
+import java.util.Arrays;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 import at.fwuick.herebedragons.TextureStorage;
+import at.fwuick.herebedragons.entities.objects.Pickup;
 import at.fwuick.herebedragons.world.Point;
 
 public abstract class Creature extends Entity{
@@ -27,6 +30,7 @@ public abstract class Creature extends Entity{
 		super();
 		this.health = health;
 		this.needTick = true;
+		this.canHit = true;
 	}
 
 	public void dealDamage(int i) {
@@ -52,8 +56,14 @@ public abstract class Creature extends Entity{
 	
 	public void die(){
 		deathvariable = DEFAULT_CORPSE_TIMER;
+		drop();
 	}
 	
+	public void drop() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public boolean showCorpse(){
 		return deathvariable>=0;
 	}
@@ -76,6 +86,20 @@ public abstract class Creature extends Entity{
 		if(showCorpse())
 			return new Rectangle();
 		return super.getHitBox();
+	}
+	
+	
+	public void dropPickups(Pickup... pickups){
+		int minX = this.getPosition().x-10;
+		int minY = this.getPosition().y-10;
+		int maxXADD = Math.round(this.getBounds().x+20);
+		int maxYADD =  Math.round(this.getBounds().y+20);
+		
+		Arrays.stream(pickups).forEach(p -> {
+			p.setPosition(new Point(minX, minY).goNorth(random().nextInt(maxYADD)).goEast(random().nextInt(maxXADD)));
+			manager.spawn(p);
+		});
+		
 	}
 
 	@Override

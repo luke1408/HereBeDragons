@@ -6,6 +6,7 @@ public class Inventory {
 	
 	private Item[] slots;
 	private int row_size;
+	public int coins;
 	
 	public Inventory(int rows, int column){
 		slots = new Item[rows*column];

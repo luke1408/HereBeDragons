@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import at.fwuick.herebedragons.TextureStorage;
 import at.fwuick.herebedragons.world.Chunk;
 import at.fwuick.herebedragons.world.Point;
+import at.fwuick.herebedragons.world.Point.Distance;
 
 public abstract class Entity {
 	protected PointHistory position;
@@ -140,5 +141,11 @@ public abstract class Entity {
 		if(manager == null)
 			return new Random();
 		return manager.random();
+	}
+	
+	//Is used to calculate the current velocity of an entity
+	//Represented as an distance
+	public Distance velocity(){
+		return position.history().getDistanceTo(position.get());
 	}
 }

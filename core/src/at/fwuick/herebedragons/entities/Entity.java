@@ -65,12 +65,16 @@ public abstract class Entity {
 		return this.bounds;
 	}
 	
+	//Bounding Box positioned relatively to the world position of the entity
+	//The part of an entity which you can't walk throughs
 	public Rectangle getBoundingBox(){
-		return new Rectangle(getPosition().x, getPosition().y, getBounds().x, getBounds().y/4);
+		return new Rectangle(0, 0, getBounds().x, getBounds().y/4);
 	}
 	
+	//Hit Box positioned relatively to the world position of the entity
+	//The part of an entity which you have to punch to apply some damage
 	public Rectangle getHitBox(){
-		return new Rectangle(getPosition().x, getPosition().y, getBounds().x*2, getBounds().y);
+		return new Rectangle(0, 0, getBounds().x*2, getBounds().y);
 	}
 	
 	//Reports a chanage of position to the EntityManager if he exists
@@ -130,4 +134,15 @@ public abstract class Entity {
 		shadow.setPosition(renderPositon.x + shadowRectangle.x, renderPositon.y + shadowRectangle.y);
 		shadow.draw(batch);
 	}
+	
+	
+	//Repositions given rectangle to an absolute position
+	public Rectangle getAbsolutePositioned(Rectangle relative){
+		return EntityManager.relocateRectangle(relative, getPosition());
+	}
+	
+	public Rectangle getAbsoluteBoundingBox(){
+		return getAbsolutePositioned(getBoundingBox());
+	}
+	
 }

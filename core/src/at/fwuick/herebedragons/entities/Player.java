@@ -120,7 +120,7 @@ public class Player extends Creature {
 
 	@Override
 	public Rectangle getBoundingBox() {
-		return new Rectangle(getPosition().x+10*SIZE_MULTIPLIKATOR, getPosition().y, 11*SIZE_MULTIPLIKATOR, 3*SIZE_MULTIPLIKATOR);
+		return multiplyRectangle(new Rectangle(10, 0, 11, 3));
 	}
 	
 	

@@ -16,7 +16,7 @@ public class Tree extends Entity{
 
 	@Override
 	public Rectangle getBoundingBox() {
-		return new Rectangle(getPosition().x, getPosition().y, getBounds().x, 60);
+		return new Rectangle(0, 0, getBounds().x, 60);
 	}
 	
 	

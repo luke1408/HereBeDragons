@@ -41,7 +41,7 @@ public class EntityRender {
 		/*Texture hitbox = TextureStorage.load("hitbox");
 		entities.stream().sorted(backToForth).forEach(e -> {
 			if(e instanceof Player || e instanceof Tree){
-				Rectangle rek = e.getBoundingBox();
+				Rectangle rek = e.getAbsoluteBoundingBox();
 				Point recPoint = new Point(rek.x, rek.y);
 				Point renderPoint = world.getRenderPosition(recPoint);
 				Sprite sprite = new Sprite(hitbox);

@@ -72,13 +72,10 @@ public class EntityManager {
 	
 	public boolean collapse(Entity entity, Point newP){
 		List<Entity> entitiesToCheck = entityFrame;
-		Rectangle rec = new Rectangle(entity.getBoundingBox());
-		Distance d = entity.move.getPosition().getDistanceTo(newP);
-		Point newRecPoint = new Point(rec.getPosition(new Vector2())).moveDistance(d);
-		rec.setPosition(newRecPoint);
+		Rectangle rec = relocateRectangle(entity.getBoundingBox(), newP);
 		for(Entity e: entitiesToCheck){
 			if(!e.equals(entity)&&!e.canWalkthrough){
-				if(e.getBoundingBox().overlaps(rec)){
+				if(e.getAbsolutePositioned(e.getBoundingBox()).overlaps(rec)){
 					return true;
 				}
 			}
@@ -87,7 +84,7 @@ public class EntityManager {
 	}
 	
 	public void pickups(){
-		entityFrame.stream().filter(e -> e instanceof Pickup).map(e -> (Pickup)e).filter(p -> p.getBoundingBox().overlaps(this.world.player.getBoundingBox())).forEach(p -> p.pickup(this.world.player));
+		entityFrame.stream().filter(e -> e instanceof Pickup).map(e -> (Pickup)e).filter(p -> p.getAbsoluteBoundingBox().overlaps(this.world.player.getAbsoluteBoundingBox())).forEach(p -> p.pickup(this.world.player));
 	}
 	
 	//Gets all entities that are overlapping with the given rectangle
@@ -102,6 +99,11 @@ public class EntityManager {
 
 	public Random random() {
 		return random;
+	}
+	
+	//Repositions a relative Rectangle to a point
+	public static Rectangle relocateRectangle(Rectangle relative, Vector2 position){
+		return new Rectangle(position.x + relative.x, position.y + relative.y, relative.width, relative.height);
 	}
 
 }

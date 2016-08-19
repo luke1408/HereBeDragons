@@ -82,14 +82,14 @@ public abstract class Creature extends Entity{
 	public Rectangle getBoundingBox() {
 		if(showCorpse())
 			return new Rectangle();
-		return super.getBoundingBox();
+		return multiplyRectangle(super.getBoundingBox());
 	}
 
 	@Override
 	public Rectangle getHitBox() {
 		if(showCorpse())
 			return new Rectangle();
-		return super.getHitBox();
+		return multiplyRectangle(super.getHitBox());
 	}
 	
 	
@@ -120,7 +120,12 @@ public abstract class Creature extends Entity{
 
 	@Override
 	public Rectangle getShadow() {
-		Rectangle rectangle = super.getShadow();
+		return multiplyRectangle(super.getShadow());
+	}
+	
+	//Multiplies a rectangle by SIZE_MULTIPLIKATOR
+	//Recctangle entered here must be relative to entity position (entity.position = 0/0)
+	public Rectangle multiplyRectangle(Rectangle rectangle){
 		return new Rectangle(rectangle.x * SIZE_MULTIPLIKATOR, rectangle.y * SIZE_MULTIPLIKATOR, rectangle.width * SIZE_MULTIPLIKATOR, rectangle.height * SIZE_MULTIPLIKATOR);
 	}
 	

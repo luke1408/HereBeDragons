@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 import at.fwuick.herebedragons.entities.Entity;
+import at.fwuick.herebedragons.entities.Player;
+import at.fwuick.herebedragons.entities.objects.Tree;
+import at.fwuick.herebedragons.world.Point;
 import at.fwuick.herebedragons.world.World;
 
 public class EntityRender {
@@ -29,7 +32,7 @@ public class EntityRender {
 
 			@Override
 			public int compare(Entity o1, Entity o2) {
-				return Integer.compare(o2.getPosition().y, o1.getPosition().y);
+				return Float.compare(o2.getPosition().y, o1.getPosition().y);
 			}
 		};
 		entities.stream().sorted(backToForth).forEach(e -> {
@@ -37,21 +40,14 @@ public class EntityRender {
 		});
 		/*Texture hitbox = TextureStorage.load("hitbox");
 		entities.stream().sorted(backToForth).forEach(e -> {
-			Rectangle rek = null;
-			if(e instanceof Player){
-				Player p = (Player)e;
-				rek = p.punchRectangle();
-			}else if (e instanceof Creature) {
-				rek = ((Creature)e).getHitBox();
-			}
-			if(rek != null){
-			Point recPoint = new Point(Math.round(rek.x), Math.round(rek.y));
-			Point renderPoint = world.getRenderPosition(recPoint);
-			Texture t = TextureStorage.load("hitbox");
-			Sprite sprite = new Sprite(t);
-			sprite.setSize(rek.width, rek.height);
-			sprite.setPosition(renderPoint.x, renderPoint.y);
-			sprite.draw(batch);
+			if(e instanceof Player || e instanceof Tree){
+				Rectangle rek = e.getBoundingBox();
+				Point recPoint = new Point(rek.x, rek.y);
+				Point renderPoint = world.getRenderPosition(recPoint);
+				Sprite sprite = new Sprite(hitbox);
+				sprite.setSize(rek.width, rek.height);
+				sprite.setPosition(renderPoint.x, renderPoint.y);
+				sprite.draw(batch);
 			}
 		});*/
 	}

@@ -1,8 +1,10 @@
 package at.fwuick.herebedragons.world;
 
-public class Point extends java.awt.Point {
+import com.badlogic.gdx.math.Vector2;
 
-	public Point(int x, int y) {
+public class Point extends Vector2  {
+
+	public Point(float x, float y) {
 		super(x, y);
 	}
 
@@ -11,7 +13,7 @@ public class Point extends java.awt.Point {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Point(java.awt.Point p) {
+	public Point(Vector2 p) {
 		super(p);
 		// TODO Auto-generated constructor stub
 	}
@@ -20,8 +22,8 @@ public class Point extends java.awt.Point {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = result * prime + new Integer(this.x).hashCode();
-		result = result * prime + new Integer(this.y).hashCode();
+		result = result * prime + new Float(x).hashCode();
+		result = result * prime + new Float(this.y).hashCode();
 		return result;
 	}
 	
@@ -36,11 +38,23 @@ public class Point extends java.awt.Point {
 		return p;
 	}
 	
-	public class Distance extends Point{
+	public class Distance extends Vector2{
 
-		public Distance(int i, int j) {
+		public Distance(float i, float j) {
 			super(i,j);
 		}
+
+		public Distance() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
+		public Distance(Vector2 v) {
+			super(v);
+			// TODO Auto-generated constructor stub
+		}
+		
+		
 		
 	}
 	
@@ -63,6 +77,23 @@ public class Point extends java.awt.Point {
 		this.x-=i;
 		return this;
 	}
+	
+	public int intX(){
+		return Math.round(x);
+	}
+	
+	public int intY(){
+		return Math.round(y);
+	}
+
+	@Override
+	public Point clone(){
+		// TODO Auto-generated method stub
+		return new Point(this);
+	}
+
+	
+	
 	
 	
 }

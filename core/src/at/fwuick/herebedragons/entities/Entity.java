@@ -9,12 +9,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import at.fwuick.herebedragons.TextureStorage;
+import at.fwuick.herebedragons.entities.move.Movement;
+import at.fwuick.herebedragons.entities.move.Vegetable;
 import at.fwuick.herebedragons.world.Chunk;
 import at.fwuick.herebedragons.world.Point;
 import at.fwuick.herebedragons.world.Point.Distance;
 
 public abstract class Entity {
-	protected PointHistory position;
 	protected EntityManager manager;
 	//Hitbox/bounds of an entity
 	protected Vector2 bounds;
@@ -23,58 +24,22 @@ public abstract class Entity {
 	public boolean canHit;
 	public boolean canWalkthrough;
 	
+	public Movement move;
 	
 	
-	public Entity() {
+	
+	public Entity(Movement move) {
 		super();
-		position = new PointHistory(this);
-		needTick = false;
+		this.setMovement(move);
 	}
-
-
-	public class PointHistory{
-		private Point last;
-		private Point current;
-		private Entity entity;
-		
-		public PointHistory(Entity e){
-			this.entity = e;
-		}
-		
-		public void set(Point p){
-			if(manager == null || !manager.collapse(this.entity, p)){
-				this.last = current;
-				this.current = p;
-			}
-		}
-		
-		public Point get(){
-			return current;
-		}
-		
-		public Point history(){
-			return last;
-		}
-		
-		public void goNorth(int i){
-			set(new Point(get()).goNorth(i));
-			notifyManager();
-		}
-		
-		public void goEast(int i){
-			set(new Point(get()).goEast(i));
-			notifyManager();
-		}
-		
-		public void goSouth(int i){
-			set(new Point(get()).goSouth(i));
-			notifyManager();
-		}
-		
-		public void goWest(int i){
-			set(new Point(get()).goWest(i));
-			notifyManager();
-		}
+	
+	public Entity(){
+		this(new Vegetable());
+	}
+	
+	public void setMovement(Movement move){
+		move.setEntity(this);
+		this.move = move;
 	}
 	
 	public void setEntityManager(EntityManager manager){
@@ -84,12 +49,12 @@ public abstract class Entity {
 	public abstract Texture getTexture();
 	
 	public Point getPosition(){
-		return position.current;
+		return move.getPosition();
 	}
 	
 	public void setPosition(Point p){
 		notifyManager();
-		this.position.set(p);
+		this.move.setPosition(p);
 	}
 	
 	public Vector2 getBounds(){
@@ -111,17 +76,14 @@ public abstract class Entity {
 	//Reports a chanage of position to the EntityManager if he exists
 	public void notifyManager(){
 		if(manager!=null)
-			manager.reportChange(this, position.last, position.get());
+			manager.reportChange(this, this.move.getLastPosition(), this.move.getPosition());
 	}
 		
 	public void render(SpriteBatch batch, Point renderPosition){
-		Sprite shadow = new Sprite(TextureStorage.load("shadow"));
+		renderShadow(batch, renderPosition);
 		Sprite sprite = new Sprite(this.getTexture());
-		sprite.setSize(sprite.getWidth()*2, sprite.getHeight()*2);
-		shadow.setSize(sprite.getWidth(), sprite.getHeight());
+		sprite.setSize(sprite.getWidth(), sprite.getHeight());
 		sprite.setPosition(renderPosition.x, renderPosition.y);
-		shadow.setPosition(renderPosition.x, renderPosition.y-2);
-		shadow.draw(batch);
 		sprite.draw(batch);
 	}
 	
@@ -130,7 +92,7 @@ public abstract class Entity {
 	}
 	
 	public void tick(){
-		
+		this.move.tick();
 	}
 	
 	public void despawn(){
@@ -146,6 +108,26 @@ public abstract class Entity {
 	//Is used to calculate the current velocity of an entity
 	//Represented as an distance
 	public Distance velocity(){
-		return position.history().getDistanceTo(position.get());
+		return this.move.velocity();
+	}
+
+	public boolean collapse(Point newPoint) {
+		return this.manager.collapse(this, newPoint);
+	}
+	
+	//Get Shadow Rectangle positioned relatively from 0/0 of the texture
+	public Rectangle getShadow(){
+		Rectangle rectangle =  new Rectangle();
+		rectangle.setSize(this.getBounds().x, (float) (this.getBounds().y * 0.2));
+		rectangle.setPosition(0, -(rectangle.height/2));
+		return rectangle;
+	}
+	
+	public void renderShadow(SpriteBatch batch, Point renderPositon){
+		Sprite shadow = new Sprite(TextureStorage.load("shadow"));
+		Rectangle shadowRectangle = this.getShadow();
+		shadow.setSize(shadowRectangle.width, shadowRectangle.height);
+		shadow.setPosition(renderPositon.x + shadowRectangle.x, renderPositon.y + shadowRectangle.y);
+		shadow.draw(batch);
 	}
 }

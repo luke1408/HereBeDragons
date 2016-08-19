@@ -7,12 +7,14 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import at.fwuick.herebedragons.entities.objects.Pickup;
 import at.fwuick.herebedragons.world.Chunk;
 import at.fwuick.herebedragons.world.Point;
+import at.fwuick.herebedragons.world.Point.Distance;
 import at.fwuick.herebedragons.world.World;
 
 //This holds the collection of all Entities in a world
@@ -30,7 +32,7 @@ public class EntityManager {
 		this.world = w;
 		entityFrame = new ArrayList<>();
 		random = new Random();
-	}
+	} 
 	
 	//Entities that should get tick() and render()
 	private List<Entity> entityFrame;
@@ -64,14 +66,16 @@ public class EntityManager {
 	}
 	
 	public void spawn(Entity e){
-		entities.put(Chunk.indexFromCoord(e.position.get()), e);
+		entities.put(Chunk.indexFromCoord(e.getPosition()), e);
 		e.setEntityManager(this);
 	}
 	
 	public boolean collapse(Entity entity, Point newP){
 		List<Entity> entitiesToCheck = entityFrame;
 		Rectangle rec = new Rectangle(entity.getBoundingBox());
-		rec.setPosition(newP.x, newP.y);
+		Distance d = entity.move.getPosition().getDistanceTo(newP);
+		Point newRecPoint = new Point(rec.getPosition(new Vector2())).moveDistance(d);
+		rec.setPosition(newRecPoint);
 		for(Entity e: entitiesToCheck){
 			if(!e.equals(entity)&&!e.canWalkthrough){
 				if(e.getBoundingBox().overlaps(rec)){

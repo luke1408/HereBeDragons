@@ -5,6 +5,7 @@ import java.util.Collection;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
+import at.fwuick.herebedragons.entities.move.PlayerControlled;
 import at.fwuick.herebedragons.item.Inventory;
 import at.fwuick.herebedragons.item.Item;
 import at.fwuick.herebedragons.world.Point;
@@ -28,9 +29,7 @@ public class Player extends Creature {
 	public static final int DEFAULT_PUNCHING_ANIMATION = 10;
 
 	public Player(Point p){
-		super(Health.IMMORTAL);
-		this.position = new PointHistory(this);
-		this.position.set(p);
+		super(Health.IMMORTAL, new PlayerControlled());
 		direction = "down";
 		walkCounter = 1;
 		this.inventory = new Inventory();
@@ -42,6 +41,7 @@ public class Player extends Creature {
 	
 	@Override
 	public void tick(){
+		super.tick();
 		if(punchCooldown > 0)
 			punchCooldown--;
 		if(punchingAnimation > 0)
@@ -67,7 +67,7 @@ public class Player extends Creature {
 	}
 	
 	//This is needed for automatizing the walking animation
-	private void walk(String direction){
+	public void walk(String direction){
 		this.direction = direction;
 		walking = true;
 		if(walkCounter>=19)
@@ -80,25 +80,7 @@ public class Player extends Creature {
 		return (walkCounter/10)+1 ;
 	}
 	
-	public void goNorth(){
-		walk("up");
-		this.position.goNorth(1);
-	}
-	
-	public void goEast(){
-		walk("right");
-		this.position.goEast(1);
-	}
-	
-	public void goSouth(){
-		walk("down");
-		this.position.goSouth(1);
-	}
-	
-	public void goWest(){
-		walk("left");
-		this.position.goWest(1);
-	}
+
 	
 	public void punch(){
 		if(punchCooldown > 0)
@@ -135,5 +117,12 @@ public class Player extends Creature {
 	public Inventory inventory(){
 		return inventory;
 	}
+
+	@Override
+	public Rectangle getBoundingBox() {
+		return new Rectangle(getPosition().x+10*SIZE_MULTIPLIKATOR, getPosition().y, 11*SIZE_MULTIPLIKATOR, 3*SIZE_MULTIPLIKATOR);
+	}
+	
+	
 	
 }

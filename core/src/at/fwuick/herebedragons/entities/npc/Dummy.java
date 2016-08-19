@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import at.fwuick.herebedragons.TextureStorage;
 import at.fwuick.herebedragons.entities.Creature;
 import at.fwuick.herebedragons.entities.Health;
+import at.fwuick.herebedragons.entities.move.Vegetable;
 import at.fwuick.herebedragons.entities.objects.CoinPickup;
 import at.fwuick.herebedragons.entities.objects.Pickup;
 import at.fwuick.herebedragons.world.Point;
@@ -20,7 +21,7 @@ public class Dummy extends Creature{
 	private int textureIndex;
 	
 	public Dummy(){
-		super(new Health(20));
+		super(new Health(20), new Vegetable());
 		textureIndex = randomness.nextInt(5)+1;
 	}
 
@@ -29,10 +30,6 @@ public class Dummy extends Creature{
 		if(this.showCorpse())
 			return TextureStorage.load("puppet_corpse");
 		return TextureStorage.load(String.format("puppet%s", textureIndex));
-	}
-
-	public void setPosition(Point point) {
-		this.position.set(point);
 	}
 
 	@Override

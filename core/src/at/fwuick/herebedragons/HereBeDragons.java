@@ -34,21 +34,6 @@ public class HereBeDragons extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if(Gdx.input.isKeyPressed(Keys.W)){
-			world.player.goNorth();
-		}
-		if(Gdx.input.isKeyPressed(Keys.A)){
-			world.player.goWest();
-		}
-		if(Gdx.input.isKeyPressed(Keys.S)){
-			world.player.goSouth();
-		}
-		if(Gdx.input.isKeyPressed(Keys.D)){
-			world.player.goEast();
-		}
-		if(Gdx.input.isKeyPressed(Keys.E)){
-			world.player.punch();
-		}
 		batch.begin();
 		world.tick();
 		world.render(batch);

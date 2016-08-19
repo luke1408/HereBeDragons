@@ -33,8 +33,8 @@ public class Chunk {
 	public void render(SpriteBatch batch, Point p){
 		for(int i=0; i<CHUNK_DIMENSION; i++){
 			for(int j=0; j<CHUNK_DIMENSION; j++){
-				int x = i*BLOCK_SIZE +p.x;
-				int y = j*BLOCK_SIZE + p.y;
+				int x = i*BLOCK_SIZE +p.intX();
+				int y = j*BLOCK_SIZE + p.intY();
 				ground[i][j].render(batch, new Point(x, y));
 				
 			}
@@ -51,7 +51,7 @@ public class Chunk {
 	}
 	
 	public static Point indexFromCoord(Point p){
-		return new Point(indexFromCoord(p.x), indexFromCoord(p.y));
+		return new Point(indexFromCoord(p.intX()), indexFromCoord(p.intY()));
 	}
 	
 	public Point getIndex(){

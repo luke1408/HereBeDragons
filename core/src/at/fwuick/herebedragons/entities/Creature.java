@@ -9,10 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 import at.fwuick.herebedragons.TextureStorage;
+import at.fwuick.herebedragons.entities.move.Movement;
 import at.fwuick.herebedragons.entities.objects.Pickup;
 import at.fwuick.herebedragons.world.Point;
 
 public abstract class Creature extends Entity{
+	
+	public final static int SIZE_MULTIPLIKATOR = 2;
 	
 	//HEALTH OBJECT
 	private Health health;
@@ -26,8 +29,8 @@ public abstract class Creature extends Entity{
 	// >0 = corpses
 	private int deathvariable = -1;
 	
-	public Creature(Health health){
-		super();
+	public Creature(Health health, Movement move){
+		super(move);
 		this.health = health;
 		this.needTick = true;
 		this.canHit = true;
@@ -44,6 +47,7 @@ public abstract class Creature extends Entity{
 
 	@Override
 	public void tick() {
+		super.tick();
 		if(deathvariable == 0){
 			this.despawn();
 			return;
@@ -90,8 +94,8 @@ public abstract class Creature extends Entity{
 	
 	
 	public void dropPickups(Pickup... pickups){
-		int minX = this.getPosition().x-10;
-		int minY = this.getPosition().y-10;
+		int minX = this.getPosition().intX()-10;
+		int minY = this.getPosition().intY()-10;
 		int maxXADD = Math.round(this.getBounds().x+20);
 		int maxYADD =  Math.round(this.getBounds().y+20);
 		
@@ -104,18 +108,23 @@ public abstract class Creature extends Entity{
 
 	@Override
 	public void render(SpriteBatch batch, Point renderPosition) {
-		Sprite shadow = new Sprite(TextureStorage.load("shadow"));
+		renderShadow(batch, renderPosition);
 		Sprite sprite = new Sprite(this.getTexture());
-		sprite.setSize(sprite.getWidth()*2, sprite.getHeight()*2);
+		sprite.setSize(sprite.getWidth()*SIZE_MULTIPLIKATOR, sprite.getHeight()*SIZE_MULTIPLIKATOR);
 		if(damageAnimation > 0)
 			sprite.setColor(Color.RED);
-		shadow.setSize(sprite.getWidth(), sprite.getHeight());
 		sprite.setPosition(renderPosition.x, renderPosition.y);
-		shadow.setPosition(renderPosition.x, renderPosition.y-10);
-		shadow.draw(batch);
 		if(!blinkCorpse())
 			sprite.draw(batch);
 	}
+
+	@Override
+	public Rectangle getShadow() {
+		Rectangle rectangle = super.getShadow();
+		return new Rectangle(rectangle.x * SIZE_MULTIPLIKATOR, rectangle.y * SIZE_MULTIPLIKATOR, rectangle.width * SIZE_MULTIPLIKATOR, rectangle.height * SIZE_MULTIPLIKATOR);
+	}
+	
+	
 	
 	
 }
